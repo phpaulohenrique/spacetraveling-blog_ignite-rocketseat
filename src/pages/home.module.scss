@@ -1,0 +1,88 @@
+// TODO
+
+.main{
+    // background-color: blue;
+    // padding-bottom: 30rem;
+    &:has(:not(.btnLoadMorePosts)){
+        padding-bottom: 14rem;
+    }
+
+    
+
+
+    .posts {
+        margin-top:7rem;
+        // margin-bottom: 7rem;
+
+    }
+
+    .post{
+
+        display: block;
+        // margin: 1rem;
+        
+
+        strong{
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1.2rem;
+            color: var(--white);
+            transition: color .2s;
+
+
+            &:hover{
+                color: rgb(227, 134, 255);
+
+            }
+        }
+
+        p{
+            // color: var(--gray)
+            // font-size: 1.1rem;
+            margin-top: .6rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        time{
+            
+            margin-right: 2.5rem;
+            
+        }
+
+        svg{
+            margin-right: .4rem;
+        }
+
+        time, span{
+            font-size: .9rem;
+            color: var(--gray-300)
+        }
+
+
+
+        & + .post{
+            margin-top: 3.5rem;
+        }
+    }
+
+    button.btnLoadMorePosts{
+        
+        border: none;
+        background: transparent;
+        font-weight: 600;
+        font-size: 1.07rem;
+        color: var(--pink-300);
+        // letter-spacing: 1px;
+
+        // display: block;
+        margin-top: 2rem;
+        // margin-inline: auto;
+
+        transition: fiilter .2s;
+
+        &:hover{
+            filter: brightness(1.3)
+        }
+    }
+}
