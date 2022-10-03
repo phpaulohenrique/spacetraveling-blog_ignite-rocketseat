@@ -198,7 +198,7 @@ export default function Post({ post, previousPost, nextPost }: PostProps) {
 // }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const prismic = getPrismicClient({});
+  const prismic = getPrismicClient();
   const posts = await prismic.getByType('posts');
 
   // console.log(posts);
@@ -234,7 +234,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     };
   }
 
-  const prismic = getPrismicClient({});
+  const prismic = getPrismicClient();
 
   const response = await prismic.getByUID('posts', String(params.slug));
   // console.log(response);
