@@ -203,20 +203,20 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   // console.log(posts);
 
-  const twoPosts = posts.results.slice(0, 2);
+  const twoPosts = posts.results
 
   // console.log(twoPosts);
 
-  const paths = twoPosts.map(post => ({
+  const pathss = twoPosts.map(post => ({
     params: { slug: post.uid },
   }));
-  console.log(paths);
+  console.log(pathss);
 
   // TODO
 
   return {
-    paths: paths,
-    fallback: true,
+    paths: pathss,
+    fallback: 'blocking',
   };
 };
 
@@ -288,7 +288,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const post = {
     uid: response.uid,
     first_publication_date: response.first_publication_date,
-    data: response.data,
+    data: response?.data,
   };
 
   // console.log('post');
