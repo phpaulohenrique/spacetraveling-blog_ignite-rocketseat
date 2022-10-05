@@ -3,17 +3,23 @@
 
 .header{
     width: 100%;
-    // background-color: gray;
-    padding: 1rem;
+    background-color: rgb(53, 0, 53);
+    // padding: 1rem;
     // height: 4rem;
     top: 0;
     position: fixed;
+    padding: .8rem;
+
+
 
     div{
-        max-width: 1000px;
+        max-width: 1120px;
         margin-inline: auto;
         // height: 4rem;
-        background-color: rgb(0, 64, 255);
+        // background-color: rgb(0, 64, 255);
+
+        display: flex;
+        align-items: center;
     }
 
     img{

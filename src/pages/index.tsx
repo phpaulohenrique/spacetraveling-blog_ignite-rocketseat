@@ -3,13 +3,15 @@ import ptBR from 'date-fns/locale/pt-BR';
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
-import { FaCalendar, FaUser } from 'react-icons/fa';
+import { FaUser  } from 'react-icons/fa';
+import {  AiOutlineCalendar, AiOutlineUser } from 'react-icons/ai';
 import { useState } from 'react';
 
 import { getPrismicClient } from '../services/prismic';
 
 // import commonStyles from '../styles/common.module.scss';
 import styles from './home.module.scss';
+import Header from '../components/Header';
 
 interface Post {
   uid?: string;
@@ -97,11 +99,13 @@ export default function Home({ postsPagination }: HomeProps) {
   return (
     <>
       <Head>
-        <title>spacetraveling</title>
+        <title>Home | spacetraveling</title>
       </Head>
 
+      <Header/>
+
       <main className={styles.main}>
-        <img src="/logo-spacetraveling.svg" alt="spacetraveling logo" />
+        {/* <img src="/logo-spacetraveling.svg" alt="spacetraveling logo" /> */}
 
         <div className={styles.posts}>
           {posts.results.map(post => (
@@ -110,7 +114,9 @@ export default function Home({ postsPagination }: HomeProps) {
                 <strong>{post.data.title}</strong>
                 <p>{post.data.subtitle}</p>
 
+                
                 <time>
+                  <AiOutlineCalendar/>
                   {format(
                     new Date(post.first_publication_date),
                     'dd MMM yyyy',
@@ -120,7 +126,7 @@ export default function Home({ postsPagination }: HomeProps) {
                   )}
                 </time>
                 <span>
-                  <FaUser />
+                  <AiOutlineUser />
                   {post.data.author}
                 </span>
               </a>

@@ -15,6 +15,7 @@ import { getPrismicClient } from '../../services/prismic';
 // import commonStyles from '../../styles/common.module.scss';
 import styles from './post.module.scss';
 import { useRouter } from 'next/router';
+import { AiOutlineCalendar, AiOutlineClockCircle, AiOutlineUser } from 'react-icons/ai';
 
 interface Post {
   uid: string;
@@ -119,25 +120,24 @@ export default function Post({ post, previousPost, nextPost }: PostProps) {
               <h1>{post.data.title}</h1>
 
               <div className={styles.postInfo}>
-                <span className={styles.infoIcon}>
-                  <FiCalendar />
-                </span>
-                <time>{
-                  format(
+                {/* <span className={styles.infoIcon}>
+                </span> */}
+                <time>
+                  <AiOutlineCalendar />
+
+                  {format(
                     new Date(post.first_publication_date),
                     'dd MMM yyyy',
                     {
                       locale: ptBR,
                     }
-                  )
-                  }
-                  
+                  )}
                 </time>
                 <span>
-                  <FaUser /> {post.data.author}
+                  <AiOutlineUser /> {post.data.author}
                 </span>
                 <span>
-                  <FaClock />
+                  <AiOutlineClockCircle />
                   {readingTime} min
                 </span>
               </div>
@@ -164,23 +164,31 @@ export default function Post({ post, previousPost, nextPost }: PostProps) {
           <hr />
 
           <aside className={styles.footer}>
-            {previousPost && (
-              <div>
-                <span>{previousPost.data.title}</span>
-                <Link href="/">
-                  <a>Post anterior</a>
-                </Link>
-              </div>
-            )}
+            <div>
+              {previousPost && (
+                  <>
+                  <span>{previousPost.data.title}</span>
+                  <Link href={`/post/${previousPost.uid}`}>
+                    <a>Post anterior</a>
+                  </Link>
+                  </>
+                
+              )}
+            </div>
 
-            {nextPost && (
-              <div>
-                <span>{nextPost.data.title}</span>
-                <Link href="/">
-                  <a>Próximo Post</a>
-                </Link>
-              </div>
-            )}
+            <div>
+
+              {nextPost && (
+                <>
+                  <span>{nextPost.data.title}</span>
+                  <Link href={`/post/${nextPost.uid}`}>
+                    <a>Próximo Post</a>
+                  </Link>
+                </>
+              )}
+
+            </div>
+
           </aside>
         </main>
       )}
@@ -199,23 +207,24 @@ export default function Post({ post, previousPost, nextPost }: PostProps) {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const prismic = getPrismicClient();
+
   const posts = await prismic.getByType('posts');
 
   // console.log(posts);
 
-  const twoPosts = posts.results
+  // const twoPosts = posts.results
 
   // console.log(twoPosts);
 
-  const pathss = twoPosts.map(post => ({
+  const paths = posts.results.map(post => ({
     params: { slug: post.uid },
   }));
-  console.log(pathss);
+  console.log(paths);
 
   // TODO
 
   return {
-    paths: pathss,
+    paths: paths,
     fallback: 'blocking',
   };
 };

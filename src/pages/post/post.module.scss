@@ -17,16 +17,25 @@
     // margin-inline: auto;
 
 
-
-
     .imgBanner{
         width: 100%;
         max-height: 500px;
         margin-top: 4rem;
     }
 
+    span, time{
+
+        display: flex;
+        align-items: center;
+        gap: .2rem;
+    }
+
     article{
         margin: 5rem 0 5rem 0;
+
+        p{
+            line-height: 2;
+        }
     }
 
     header{
