@@ -24,15 +24,8 @@ interface Post {
     title: string;
     banner: {
       url: string;
-      // alt: string;
     };
     author: string;
-    // content: {
-    //   heading: string;
-    //   body: {
-    //     text: Record<string, unknown>[];
-    //   }[];
-    // }[];
 
     content: {
       heading: string;
@@ -57,20 +50,12 @@ interface PostProps {
 }
 
 export default function Post({ post, previousPost, nextPost }: PostProps) {
-  // TODO
+ 
 
-  // console.log(nextPost)
-  console.log(previousPost);
-  console.log(post);
 
   const router = useRouter();
 
-  // const a = post.data.content;
-  // console.log(a);
 
-  // const opa = post.data.content
-
-  // console.log(opa[0].body)
 
   const amountWordsOfBody = RichText.asText(
     post.data.content.reduce((acc, data) => [...acc, ...data.body], [])
@@ -105,23 +90,26 @@ export default function Post({ post, previousPost, nextPost }: PostProps) {
       <Header />
 
       {post && (
-        <main className={styles.main}>
-          {post.data.banner.url && (
+        <>
+        {post.data?.banner?.url && (
             <img
               className={styles.imgBanner}
               src={post.data.banner?.url}
               // alt={post.data.banner?.alt}
-              alt="dasdasd"
+              alt=""
+              title={post.data.title}
             />
           )}
+
+        <main className={styles.main}>
+          
 
           <article>
             <header>
               <h1>{post.data.title}</h1>
 
               <div className={styles.postInfo}>
-                {/* <span className={styles.infoIcon}>
-                </span> */}
+
                 <time>
                   <AiOutlineCalendar />
 
@@ -191,37 +179,23 @@ export default function Post({ post, previousPost, nextPost }: PostProps) {
 
           </aside>
         </main>
+        </>
       )}
     </>
   );
 }
 
-// function verifyNeighborhoodPost(post, slug): NeighborhoodPost | null {
-//   return slug === post.results[0].uid
-//     ? null
-//     : {
-//       title: post.results[0]?.data?.title,
-//       uid: post.results[0]?.uid,
-//     };
-// }
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const prismic = getPrismicClient();
 
   const posts = await prismic.getByType('posts');
 
-  // console.log(posts);
-
-  // const twoPosts = posts.results
-
-  // console.log(twoPosts);
 
   const paths = posts.results.map(post => ({
     params: { slug: post.uid },
   }));
-  console.log(paths);
 
-  // TODO
 
   return {
     paths: paths,
@@ -230,7 +204,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  // console.log(params.slug);
 
   const { slug } = params;
 
@@ -246,7 +219,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const prismic = getPrismicClient();
 
   const response = await prismic.getByUID('posts', String(params.slug));
-  // console.log(response);
+
 
   const responsePreviousPost = await prismic.getByType('posts', {
     // predicates: [],
@@ -267,32 +240,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     after: String(response.id),
     pageSize: 1,
   });
-  // console.log('eiiiiiiiiiiiiiiiita')
-  // console.log(responsePreviousPost)
 
-  // console.log('asdasdas');
-
-  // const previousPost =
-  //   responsePreviousPost.results.length !== 0
-  //     ? {
-  //         title: responsePreviousPost.results[0].data.title,
-  //         uid: responsePreviousPost.results[0].uid,
-  //       }
-  //     : null;
-
-  // // console.log('----------------')
-  // // console.log(responseNextPost);
-
-  // const nextPost = responseNextPost.results.length !== 0 ? {
-  //   title: responseNextPost.results[0].data.title,
-  //   uid: responseNextPost.results[0].uid,
-  // } : null;
-
-  // console.log(previousPost)
-
-  // const nextPost = verifyNeighborhoodPost(responseNextPost, slug);
-
-  // const previousPost = verifyNeighborhoodPost(responsePreviousPost, slug);
 
   const post = {
     uid: response.uid,
@@ -300,27 +248,14 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     data: response?.data,
   };
 
-  // console.log('post');
-  // console.log(post);
-
-  // const res = await prismic.getByType('posts', { pageSize: 1 });
-
-  console.log(responsePreviousPost.results);
-  console.log('aquiiiiiiiiiiiiiiiiiii');
-
-  // post.data.
-
-
 
   return {
     props: {
       post,
       previousPost: responsePreviousPost?.results[0] ?? null,
       nextPost: responseNextPost?.results[0] ?? null,
-      // previousPost: null,
-      // nextPost: null
+
     },
   };
 
-  // TODO
 };
